@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Juice from './Juice';
 import AddJuiceForm from './AddJuiceForm';
+import request from 'superagent';
 
 class Juices extends Component {
   constructor(props) {
@@ -22,30 +23,35 @@ class Juices extends Component {
   }
 
   onJuiceRemove = index => {
+    //make call to api to delete juice from DB
     this.state.juices.splice(index, 1);
     this.setState(this.state);
   }
 
   componentDidMount() {
-    this.setState({
-      juices: [
-        {
-          name: 'Green Machine',
-          _id: 1,
-          price: 7,
-        },
-        {
-          name: 'Pear-adise',
-          _id: 2,
-          price: 8
-        },
-        {
-          name: 'Supreme Green',
-          _id: 3,
-          price: 9
-        }
-      ]
-    });
+    request
+      .get('http://earth-house.herokuapp.com/api/juices')
+      .end((err, res) => this.setState({juices: res.body}));
+    
+    // this.setState({
+    //   juices: [
+    //     {
+    //       name: 'Green Machine',
+    //       _id: 1,
+    //       price: 7,
+    //     },
+    //     {
+    //       name: 'Pear-adise',
+    //       _id: 2,
+    //       price: 8
+    //     },
+    //     {
+    //       name: 'Supreme Green',
+    //       _id: 3,
+    //       price: 9
+    //     }
+    //   ]
+    // });
   }
 
   render() {
