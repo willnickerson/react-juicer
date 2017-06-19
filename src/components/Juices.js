@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Juice from './Juice';
 
 class Juices extends Component {
   constructor(props) {
@@ -37,12 +38,7 @@ class Juices extends Component {
     return(
       <div className="juices-view">
         <h2>Juices</h2>
-        {juices.map(juice =>
-          <div className="juice">
-            <h3> {juice.name} </h3>
-            <p> ${juice.price}.00 </p>
-          </div>
-        )}
+        {juices.map(juice => <Juice name= { juice.name } />)}
       </div>
     );
   }
