@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 class Juice extends Component {
   static PropTypes = {
     name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired
+    price: PropTypes.number.isRequired,
+    onRemove: PropTypes.func.isRequired
   }
   constructor(props) {
     super(props);
@@ -33,7 +34,7 @@ class Juice extends Component {
     const { ingredients } = this.state;
     return (
       <div className="juice-detail">
-        <h3> { this.props.name } </h3>
+        <h3> { this.props.name } <button onClick={this.props.onRemove}>remove</button></h3>
         <p> { this.props.price } </p>
         <ul className="ingredients-list">
           {ingredients.map(ingredient => <li>{ingredient.name}</li>)}

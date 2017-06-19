@@ -18,7 +18,11 @@ class Juices extends Component {
       price: juice.price,
       _id: nextId
     });
-    console.log(this.juices);
+    this.setState(this.state);
+  }
+
+  onJuiceRemove = index => {
+    this.state.juices.splice(index, 1);
     this.setState(this.state);
   }
 
@@ -50,7 +54,11 @@ class Juices extends Component {
     return(
       <div className="juices-view">
         <h2>Juices</h2>
-        {juices.map(juice => <Juice name= { juice.name } key={ juice._id }/>)}
+        {juices.map((juice, index) => <Juice 
+          name= { juice.name } 
+          key={ juice._id } 
+          onRemove={() => this.onJuiceRemove(index)}
+        />)}
         <h3>Add Juice</h3>
         <AddJuiceForm onAdd={this.onJuiceAdd}/>
       </div>
