@@ -32,26 +32,6 @@ class Juices extends Component {
     request
       .get('http://earth-house.herokuapp.com/api/juices')
       .end((err, res) => this.setState({juices: res.body}));
-    
-    // this.setState({
-    //   juices: [
-    //     {
-    //       name: 'Green Machine',
-    //       _id: 1,
-    //       price: 7,
-    //     },
-    //     {
-    //       name: 'Pear-adise',
-    //       _id: 2,
-    //       price: 8
-    //     },
-    //     {
-    //       name: 'Supreme Green',
-    //       _id: 3,
-    //       price: 9
-    //     }
-    //   ]
-    // });
   }
 
   render() {
