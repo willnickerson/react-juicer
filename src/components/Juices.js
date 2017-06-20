@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Juice from './Juice';
 import AddJuiceForm from './AddJuiceForm';
 import request from 'superagent';
+import apiUrl from '../config';
 
 class Juices extends Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class Juices extends Component {
 
   componentDidMount() {
     request
-      .get('http://earth-house.herokuapp.com/api/juices')
+      .get(`${apiUrl}/api/juices`)
       .end((err, res) => this.setState({juices: res.body}));
   }
 
