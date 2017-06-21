@@ -29,10 +29,17 @@ class JuiceDetail extends Component {
       .end((err, res) => {
         this.setState({juice: res.body});
       });
+    
+    request
+      .get(`${apiUrl}/api/ingredients`)
+      .end((err, res) => {
+        this.setState({allIngredients: res.body});
+      });
   }
 
   render() {
     const { juice } = this.state;
+    const { allIngredients } = this.state;
     return (
       <div>
         <h2>{juice.name} </h2>
@@ -47,6 +54,12 @@ class JuiceDetail extends Component {
               key={ingredient._id}
               onRemove={() => this.onRemoveIngredient(index)}/>)}
         </ul>
+
+        <select>
+          {allIngredients.map((ingredient, map) => 
+            <option key={ingredient._id} value={ingredient._id}>{ingredient.name}</option>
+          )}
+        </select>
       </div>
     );
   }
