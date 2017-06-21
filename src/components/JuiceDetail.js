@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import request from 'superagent';
+import apiUrl from '../config';
+import Ingredient from './Ingredient';
 
 class JuiceDetail extends Component {
   static PropTypes = {
@@ -10,19 +13,40 @@ class JuiceDetail extends Component {
     super(props);
 
     this.state = {
-      allIngredients: []
+      allIngredients: [],
+      juice: {
+        ingredients: []
+      }
     };
   }
-
+  onRemoveIngredient(index) {
+    this.state.juice.ingredients.splice(index, 1);
+    this.setState(this.state);
+  }
   componentDidMount() {
-    this.props._id = this.props.match.params.juiceId;
+    request
+      .get(`${apiUrl}/api/juices/${this.props.match.params.juiceId}`)
+      .end((err, res) => {
+        this.setState({juice: res.body});
+      });
   }
 
   render() {
+    const { juice } = this.state;
     return (
       <div>
-        <h1>Working </h1>
-        <p>{this.props.match.params.juiceId}</p>
+        <h2>{juice.name} </h2>
+        <h4>Description</h4>
+        <p>{juice.description}</p>
+        <h4>Ingredients</h4>
+        <ul className="ingredients-list">
+          {juice.ingredients.map((ingredient, index) =>  
+            <Ingredient name={ingredient.name} 
+              description={ingredient.description} 
+              _id={ingredient._id} 
+              key={ingredient._id}
+              onRemove={() => this.onRemoveIngredient(index)}/>)}
+        </ul>
       </div>
     );
   }
