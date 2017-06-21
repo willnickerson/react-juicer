@@ -16,12 +16,38 @@ class JuiceDetail extends Component {
       allIngredients: [],
       juice: {
         ingredients: []
-      }
+      },
+      selectValue: null,
+      hasIngredient: false,
+      addMessage: 'Add an ingredient!'
     };
   }
   onRemoveIngredient(index) {
     this.state.juice.ingredients.splice(index, 1);
     this.setState(this.state);
+  }
+
+  onSelectChange = e => {
+    this.setState({selectValue: e.target.value});
+  }
+
+  onAddIngredient = () => {
+    const selectedId = this.state.selectValue;
+    const juiceIngredients = this.state.juice.ingredients;
+    let hasIngredient = false;
+
+    for(let i = 0; i < juiceIngredients.length; i++) {
+      if(juiceIngredients[i]._id === selectedId) {
+        this.setState({addMessage: 'Already has that ingredient'});
+        return hasIngredient = true;
+      }
+    }
+    if(!hasIngredient) {
+      const newIngredient = this.state.allIngredients.find(ingredient => ingredient._id === this.state.selectValue);
+      juiceIngredients.push(newIngredient);
+      this.setState({addMessage: 'Add an ingredient!'});
+      this.setState(this.state);
+    }
   }
   componentDidMount() {
     request
@@ -54,12 +80,15 @@ class JuiceDetail extends Component {
               key={ingredient._id}
               onRemove={() => this.onRemoveIngredient(index)}/>)}
         </ul>
-
-        <select>
-          {allIngredients.map((ingredient, map) => 
-            <option key={ingredient._id} value={ingredient._id}>{ingredient.name}</option>
-          )}
-        </select>
+        <div className="add-ingredient">
+          <select onChange={this.onSelectChange}>
+            {allIngredients.map((ingredient, map) => 
+              <option key={ingredient._id} value={ingredient._id}>{ingredient.name}</option>
+            )}
+          </select>
+          <button onClick={this.onAddIngredient}>Add</button>
+          <p>{this.state.addMessage}</p>
+        </div>
       </div>
     );
   }
