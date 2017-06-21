@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import './App.css';
 import Juices from './components/Juices';
+import JuiceDetail from './components/JuiceDetail';
 
 export default  function App(props) {
   return (
@@ -28,6 +29,7 @@ export default  function App(props) {
         </p>
         <Switch>
           <Route path="/juices" component={ Juices }/>
+          <Route path="/juices/:juiceId" component={ JuiceDetail}/>
           <Route redirect="/"/>
         </Switch>
       </div>
