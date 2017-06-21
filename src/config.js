@@ -1,3 +1,3 @@
-const apiUrl = 'http://earth-house.herokuapp.com';
+const apiUrl = 'http://localhost:8080/api';
 
 export default apiUrl;

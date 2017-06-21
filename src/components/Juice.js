@@ -21,7 +21,7 @@ class Juice extends Component {
 
   componentDidMount() {
     request
-      .get(`${apiUrl}/api/juices/${this.props._id}`)
+      .get(`${apiUrl}/juices/${this.props._id}`)
       .end((err, res) => this.setState({ ingredients: res.body.ingredients }));
   }
 

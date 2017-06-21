@@ -24,7 +24,13 @@ class JuiceDetail extends Component {
   }
   onRemoveIngredient(index) {
     this.state.juice.ingredients.splice(index, 1);
-    this.setState(this.state);
+    request
+      .put(`${apiUrl}/juices/${this.state.juice._id}`)
+      .send(this.state.juice)
+      .end((err, res) => {
+        console.log(res.body);
+        this.setState(this.state);
+      });
   }
 
   onSelectChange = e => {
@@ -45,19 +51,24 @@ class JuiceDetail extends Component {
     if(!hasIngredient) {
       const newIngredient = this.state.allIngredients.find(ingredient => ingredient._id === this.state.selectValue);
       juiceIngredients.push(newIngredient);
-      this.setState({addMessage: 'Add an ingredient!'});
-      this.setState(this.state);
+      request
+        .put(`${apiUrl}/juices/${this.state.juice._id}/ingredient/${selectedId}`)
+        .send(this.state.juice)
+        .end((err, res) => {
+          this.setState({addMessage: 'Add an ingredient!'});
+          this.setState(this.state);
+        });
     }
   }
   componentDidMount() {
     request
-      .get(`${apiUrl}/api/juices/${this.props.match.params.juiceId}`)
+      .get(`${apiUrl}/juices/${this.props.match.params.juiceId}`)
       .end((err, res) => {
         this.setState({juice: res.body});
       });
     
     request
-      .get(`${apiUrl}/api/ingredients`)
+      .get(`${apiUrl}/ingredients`)
       .end((err, res) => {
         this.setState({allIngredients: res.body});
       });
