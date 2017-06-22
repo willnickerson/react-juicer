@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Juice from './Juice';
-import AddJuiceForm from './AddJuiceForm';
+import AddItemForm from './AddItemForm';
 import request from 'superagent';
 import apiUrl from '../config';
 
@@ -52,7 +52,7 @@ class AllJuices extends Component {
             onRemove={() => this.onJuiceRemove(index)}
           />)}
           <h3>Add Juice</h3>
-          <AddJuiceForm onAdd={ this.onJuiceAdd }/>
+          <AddItemForm onAdd={ this.onJuiceAdd }/>
       </div>  
     );
   }

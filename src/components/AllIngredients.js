@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Ingredient from './Ingredient';
+import AddItemForm from './AddItemForm';
 import request from 'superagent';
 import apiUrl from '../config';
 
@@ -19,15 +20,15 @@ class AllIngredients extends Component {
       .end((err, res) => this.setState({ingredients: res.body}));
   }
 
-  // onJuiceAdd = juice => {
-  //   request
-  //     .post(`${apiUrl}/juices`)
-  //     .send(juice)
-  //     .end((err ,res) => {
-  //       this.state.juices.push(res.body);
-  //       this.setState(this.state);
-  //     });
-  // }
+  onIngredientAdd = ingredient => {
+    request
+      .post(`${apiUrl}/ingredients`)
+      .send(ingredient)
+      .end((err ,res) => {
+        this.state.ingredients.push(res.body);
+        this.setState(this.state);
+      });
+  }
 
   // onJuiceRemove = index => {
   //   request
@@ -52,8 +53,9 @@ class AllIngredients extends Component {
             imgUrl = { ingredient.imgUrl }
             onRemove={() => this.onJuiceRemove(index)}
           />)}
-          {/*<h3>Add Juice</h3>
-          <AddJuiceForm onAdd={ this.onJuiceAdd }/>*/}
+
+          <h3>Add Ingredient </h3>
+          <AddItemForm onAdd={ this.onIngredientAdd }/>
       </div>  
     );
   }

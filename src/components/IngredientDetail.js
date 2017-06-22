@@ -15,7 +15,6 @@ class IngredientDetail extends Component {
       .get(`${apiUrl}/ingredients/${this.props.match.params.ingredientId}`)
       .end((err, res) => {
         this.setState({ingredient: res.body});
-        console.log(res.body);
       });
   }
 

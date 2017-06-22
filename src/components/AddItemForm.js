@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-class AddJuiceForm extends Component {
+class AddItemForm extends Component {
   static PropTypes = {
     onAdd: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,
@@ -58,4 +58,4 @@ class AddJuiceForm extends Component {
   }
 }
 
-export default AddJuiceForm;
+export default AddItemForm;
