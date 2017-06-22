@@ -5,7 +5,8 @@ class AddJuiceForm extends Component {
   static PropTypes = {
     onAdd: PropTypes.func.isRequired,
     name: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired
+    description: PropTypes.string.isRequired,
+    imgUrl: PropTypes.string.isRequired
   }
 
   constructor(props) {
@@ -13,7 +14,8 @@ class AddJuiceForm extends Component {
 
     this.state = {
       name: '',
-      price: 0
+      description: '',
+      imgUrl: ''
     };
   }
 
@@ -21,8 +23,12 @@ class AddJuiceForm extends Component {
     this.setState({name: e.target.value});
   }
 
-  onPriceChange = e => {
-    this.setState({price: e.target.value});
+  onDescriptionChange = e => {
+    this.setState({description: e.target.value});
+  }
+
+  onImgUrlChange = e => {
+    this.setState({imgUrl: e.target.value});
   }
 
   onSubmit = e => {
@@ -30,7 +36,8 @@ class AddJuiceForm extends Component {
     this.props.onAdd(this.state);
     this.setState({
       name: '',
-      price: '0'
+      description: '',
+      imgUrl: ''
     });
   }
 
@@ -40,8 +47,11 @@ class AddJuiceForm extends Component {
         <label htmlFor="name">name: </label>
         <input type="text" value={this.state.name} onChange={this.onNameChange}/>
 
-        <label htmlFor="price">price: $</label>
-        <input type="text" value={this.state.price} onChange={this.onPriceChange}/>
+        <label htmlFor="description">description: </label>
+        <input type="text" value={this.state.description} onChange={this.onDescriptionChange}/>
+
+        <label htmlFor="imgUrl">Image Url: </label>
+        <input type="text" value={this.state.imgUrl} onChange={this.onImgUrlChange}/>
         <input type="submit" value="Add Juice"/>
       </form> 
     );

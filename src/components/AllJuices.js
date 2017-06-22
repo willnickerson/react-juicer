@@ -26,20 +26,22 @@ class AllJuices extends Component {
   }
 
   onJuiceAdd = juice => {
-    //make a call to API to post
-    let nextId = this.state.juices.length + 1;
-    this.state.juices.push({
-      name: juice.name,
-      price: juice.price,
-      _id: nextId
-    });
-    this.setState(this.state);
+    request
+      .post(`${apiUrl}/juices`)
+      .send(juice)
+      .end((err ,res) => {
+        this.state.juices.push(res.body);
+        this.setState(this.state);
+      });
   }
 
   onJuiceRemove = index => {
-    //make call to api to delete juice from DB
-    this.state.juices.splice(index, 1);
-    this.setState(this.state);
+    request
+      .delete(`${apiUrl}/juices/${this.state.juices[index]._id}`)
+      .end((err, res) => {
+        this.state.juices.splice(index, 1);
+        this.setState(this.state);
+      })
   }
 
   render() {

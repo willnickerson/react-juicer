@@ -27,10 +27,7 @@ class JuiceDetail extends Component {
     request
       .put(`${apiUrl}/juices/${this.state.juice._id}`)
       .send(this.state.juice)
-      .end((err, res) => {
-        console.log(res.body);
-        this.setState(this.state);
-      });
+      .end((err, res) => this.setState(this.state));
   }
 
   onSelectChange = e => {
