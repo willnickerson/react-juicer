@@ -30,7 +30,7 @@ class Juice extends Component {
     
     return (
       <div className="juice">
-        <Link key={ this.props._id } to={`/juices/${this.props._id}`}>
+        <Link to={`/juices/${this.props._id}`}>
           <h3> { this.props.name }</h3>
         </Link>
         <button onClick={this.props.onRemove}>remove</button>

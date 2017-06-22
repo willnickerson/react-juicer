@@ -28,6 +28,14 @@ class JuiceDetail extends Component {
     };
   }
 
+  componentDidMount() {
+    request
+      .get(`${apiUrl}/juices/${this.props.match.params.juiceId}`)
+      .end((err, res) => {
+        this.setState({juice: res.body});
+      });
+  }
+  
   onRemoveIngredient(index) {
     this.state.juice.ingredients.splice(index, 1);
     request
@@ -69,13 +77,6 @@ class JuiceDetail extends Component {
       .end((err, res) => {
         this.setState({addMessage: 'Add an ingredient!'});
         this.setState(this.state);
-      });
-  }
-  componentDidMount() {
-    request
-      .get(`${apiUrl}/juices/${this.props.match.params.juiceId}`)
-      .end((err, res) => {
-        this.setState({juice: res.body});
       });
   }
 

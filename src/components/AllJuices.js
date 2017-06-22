@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
 import Juice from './Juice';
-import PropTypes from 'prop-types';
 import AddJuiceForm from './AddJuiceForm';
 import request from 'superagent';
 import apiUrl from '../config';
 
 class AllJuices extends Component {
-  static PropTypes = {
-    juices: PropTypes.array.isRequired,
-    onRemove: PropTypes.func.isRequired
-  }
 
   constructor(props) {
     super(props);
