@@ -5,6 +5,7 @@ import apiUrl from '../config';
 import Ingredient from './Ingredient';
 import EditName from './EditName';
 import EditDescription from './EditDescription';
+import IngredientSelect from './IngredientSelect';
 
 class JuiceDetail extends Component {
   static PropTypes = {
@@ -19,9 +20,6 @@ class JuiceDetail extends Component {
       juice: {
         ingredients: []
       },
-      selectValue: '',
-      hasIngredient: false,
-      addMessage: 'Add an ingredient!',
       showEdit: {
         name: false,
         description: false,
@@ -41,10 +39,7 @@ class JuiceDetail extends Component {
   onRemove = () => {
     request
       .delete(`${apiUrl}/juices/${this.state.juice._id}`)
-      .end((err, res) => {
-        if(err) console.error(err); //eslint-disable-line
-        this.props.history.push('/juices');
-      });
+      .end((err, res) => this.props.history.push('/juices'));
   }
 
   onUpdateField = (field, childState) => {
@@ -65,35 +60,16 @@ class JuiceDetail extends Component {
       });  
   }
 
-  onSelectChange = e => {
-    this.setState({selectValue: e.target.value});
-  }
-
-  onAddIngredient = () => {
-    const selectedId = this.state.selectValue;
+  onAddIngredient = newIngredient => {
     const juiceIngredients = this.state.juice.ingredients;
-    let hasIngredient = false;
-    if(selectedId === '') {
-      this.setState({addMessage: 'Select an ingredient'});
-      return hasIngredient = true;
-    }
-    for(let i = 0; i < juiceIngredients.length; i++) {
-      if(juiceIngredients[i]._id === selectedId) {
-        this.setState({addMessage: 'Already has that ingredient'});
-        return hasIngredient = true;
-      }
-    }
-    if(!hasIngredient) {
-      const newIngredient = this.state.allIngredients.find(ingredient => ingredient._id === this.state.selectValue);
-      juiceIngredients.push(newIngredient);
-      request
-        .put(`${apiUrl}/juices/${this.state.juice._id}/ingredient/${selectedId}`)
-        .send(this.state.juice)
-        .end((err, res) => {
-          this.setState({addMessage: 'Add an ingredient!'});
-          this.setState(this.state);
-        });
-    }
+    juiceIngredients.push(newIngredient);
+    request
+      .put(`${apiUrl}/juices/${this.state.juice._id}/ingredient/${newIngredient._id}`)
+      .send(this.state.juice)
+      .end((err, res) => {
+        this.setState({addMessage: 'Add an ingredient!'});
+        this.setState(this.state);
+      });
   }
   componentDidMount() {
     request
@@ -101,17 +77,10 @@ class JuiceDetail extends Component {
       .end((err, res) => {
         this.setState({juice: res.body});
       });
-    
-    request
-      .get(`${apiUrl}/ingredients`)
-      .end((err, res) => {
-        this.setState({allIngredients: res.body});
-      });
   }
 
   render() {
     const { juice } = this.state;
-    const { allIngredients } = this.state;
     return (
       <div>
         <h2>{juice.name} 
@@ -143,16 +112,9 @@ class JuiceDetail extends Component {
               key={ingredient._id}
               onRemove={() => this.onRemoveIngredient(index)}/>)}
         </ul>
-        <div className="add-ingredient">
-          <select onChange={this.onSelectChange} value={this.state.selectValue}>
-            <option value="">select an ingredient</option>
-            {allIngredients.map((ingredient, map) => 
-              <option key={ingredient._id} value={ingredient._id}>{ingredient.name}</option>
-            )}
-          </select>
-          <button onClick={this.onAddIngredient}>Add</button>
-          <p>{this.state.addMessage}</p>
-        </div>
+        <IngredientSelect 
+          juiceIngredients={this.state.juice.ingredients} 
+          onAdd={this.onAddIngredient}/>
       </div>
     );
   }
