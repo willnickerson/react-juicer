@@ -4,6 +4,7 @@ import request from 'superagent';
 import apiUrl from '../config';
 import Ingredient from './Ingredient';
 import EditName from './EditName';
+import EditDescription from './EditDescription';
 
 class JuiceDetail extends Component {
   static PropTypes = {
@@ -21,7 +22,11 @@ class JuiceDetail extends Component {
       selectValue: '',
       hasIngredient: false,
       addMessage: 'Add an ingredient!',
-      showEdit: false
+      showEdit: {
+        name: false,
+        description: false,
+        imgUrl: false,
+      }
     };
   }
 
@@ -44,15 +49,18 @@ class JuiceDetail extends Component {
 
   onUpdateField = (field, childState) => {
     const newJuice = this.state.juice;
+    const newShowEdit = this.state.showEdit;
+
     newJuice[field] = childState[field];
+    newShowEdit[field] = false;
+
     request
       .put(`${apiUrl}/juices/${this.state.juice._id}`)
       .send(newJuice)
       .end((err, res) => {
-        if(err) console.error(err);
         this.setState({
           juice: newJuice,
-          showEdit: false
+          showEdit: newShowEdit
         });
       });  
   }
@@ -108,14 +116,24 @@ class JuiceDetail extends Component {
       <div>
         <h2>{juice.name} 
           <button onClick={this.onRemove}>delete</button>
-          <button onClick={() => this.setState({showEdit: true})}>edit</button>
+          <button onClick={() => this.setState({showEdit: {
+            name: true,
+            description: true,
+            imgUrl: false
+          }
+          })}>edit</button>
         </h2>
-        {this.state.showEdit ? <EditName
+        {this.state.showEdit.name ? <EditName
           name={this.state.juice.name}
           onUpdate={this.onUpdateField}/> : null}
 
         <h4>Description</h4>
         <p>{juice.description}</p>
+
+        {this.state.showEdit.description ? <EditDescription
+          description={this.state.juice.description}
+          onUpdate={this.onUpdateField}/> : null}
+
         <h4>Ingredients</h4>
         <ul className="ingredients-list">
           {juice.ingredients.map((ingredient, index) =>  
