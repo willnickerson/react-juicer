@@ -41,7 +41,7 @@ class AllJuices extends Component {
       .end((err, res) => {
         this.state.juices.splice(index, 1);
         this.setState(this.state);
-      })
+      });
   }
 
   render() {

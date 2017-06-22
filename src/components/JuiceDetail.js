@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import request from 'superagent';
 import apiUrl from '../config';
 import Ingredient from './Ingredient';
+import EditName from './EditName';
 
 class JuiceDetail extends Component {
   static PropTypes = {
@@ -19,9 +20,11 @@ class JuiceDetail extends Component {
       },
       selectValue: '',
       hasIngredient: false,
-      addMessage: 'Add an ingredient!'
+      addMessage: 'Add an ingredient!',
+      showEdit: false
     };
   }
+
   onRemoveIngredient(index) {
     this.state.juice.ingredients.splice(index, 1);
     request
@@ -37,6 +40,21 @@ class JuiceDetail extends Component {
         if(err) console.error(err); //eslint-disable-line
         this.props.history.push('/juices');
       });
+  }
+
+  onUpdateField = (field, childState) => {
+    const newJuice = this.state.juice;
+    newJuice[field] = childState[field];
+    request
+      .put(`${apiUrl}/juices/${this.state.juice._id}`)
+      .send(newJuice)
+      .end((err, res) => {
+        if(err) console.error(err);
+        this.setState({
+          juice: newJuice,
+          showEdit: false
+        });
+      });  
   }
 
   onSelectChange = e => {
@@ -88,7 +106,14 @@ class JuiceDetail extends Component {
     const { allIngredients } = this.state;
     return (
       <div>
-        <h2>{juice.name} <span onClick={this.onRemove}>delete</span></h2>
+        <h2>{juice.name} 
+          <button onClick={this.onRemove}>delete</button>
+          <button onClick={() => this.setState({showEdit: true})}>edit</button>
+        </h2>
+        {this.state.showEdit ? <EditName
+          name={this.state.juice.name}
+          onUpdate={this.onUpdateField}/> : null}
+
         <h4>Description</h4>
         <p>{juice.description}</p>
         <h4>Ingredients</h4>
