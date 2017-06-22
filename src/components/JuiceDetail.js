@@ -17,7 +17,7 @@ class JuiceDetail extends Component {
       juice: {
         ingredients: []
       },
-      selectValue: null,
+      selectValue: '',
       hasIngredient: false,
       addMessage: 'Add an ingredient!'
     };
@@ -30,6 +30,15 @@ class JuiceDetail extends Component {
       .end((err, res) => this.setState(this.state));
   }
 
+  onRemove = () => {
+    request
+      .delete(`${apiUrl}/juices/${this.state.juice._id}`)
+      .end((err, res) => {
+        if(err) console.error(err); //eslint-disable-line
+        this.props.history.push('/juices');
+      });
+  }
+
   onSelectChange = e => {
     this.setState({selectValue: e.target.value});
   }
@@ -38,7 +47,10 @@ class JuiceDetail extends Component {
     const selectedId = this.state.selectValue;
     const juiceIngredients = this.state.juice.ingredients;
     let hasIngredient = false;
-
+    if(selectedId === '') {
+      this.setState({addMessage: 'Select an ingredient'});
+      return hasIngredient = true;
+    }
     for(let i = 0; i < juiceIngredients.length; i++) {
       if(juiceIngredients[i]._id === selectedId) {
         this.setState({addMessage: 'Already has that ingredient'});
@@ -76,7 +88,7 @@ class JuiceDetail extends Component {
     const { allIngredients } = this.state;
     return (
       <div>
-        <h2>{juice.name} </h2>
+        <h2>{juice.name} <span onClick={this.onRemove}>delete</span></h2>
         <h4>Description</h4>
         <p>{juice.description}</p>
         <h4>Ingredients</h4>
@@ -89,7 +101,8 @@ class JuiceDetail extends Component {
               onRemove={() => this.onRemoveIngredient(index)}/>)}
         </ul>
         <div className="add-ingredient">
-          <select onChange={this.onSelectChange}>
+          <select onChange={this.onSelectChange} value={this.state.selectValue}>
+            <option value="">select an ingredient</option>
             {allIngredients.map((ingredient, map) => 
               <option key={ingredient._id} value={ingredient._id}>{ingredient.name}</option>
             )}
