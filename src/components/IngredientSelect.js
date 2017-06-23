@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { StyleSheet, css } from 'aphrodite';
 import PropTypes from 'prop-types';
 import request from 'superagent';
 import apiUrl from '../config';
@@ -52,7 +53,7 @@ class IngredientSelect extends Component {
 
   render() {
     return (
-      <div className="add-ingredient">
+      <div className={css(styles.addForm)}>
         <select onChange={this.onChange} value={this.state.selectValue}>
           <option value="">select an ingredient</option>
           {this.state.allIngredients.map((ingredient, map) => 
@@ -67,3 +68,10 @@ class IngredientSelect extends Component {
 }
 
 export default IngredientSelect;
+
+const styles = StyleSheet.create({
+  addForm: {
+    textAlign: 'center',
+    margin: '25px auto'
+  }
+});

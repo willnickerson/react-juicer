@@ -54,8 +54,10 @@ class AllIngredients extends Component {
             onRemove={() => this.onIngredientRemove(index)}
           />)}
 
-          <h3>Add Ingredient </h3>
-          <AddItemForm onAdd={ this.onIngredientAdd }/>
+          <div>
+            <h2>Add Ingredient </h2>
+            <AddItemForm onAdd={ this.onIngredientAdd }/>
+          </div>
       </div>  
     );
   }

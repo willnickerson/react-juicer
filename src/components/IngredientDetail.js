@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { css } from 'aphrodite';
+import styles from '../styles/detail';
 import EditName from './EditName';
 import EditDescription from './EditDescription';
 
@@ -55,8 +57,8 @@ class IngredientDetail extends Component {
     const { ingredient } = this.state;
     return (
       <div>
-        <div className="edit-controls">
-          <Link to="/ingredients">Back to all juices</Link>
+        <div className={css(styles.editControls)}>
+          <Link to="/ingredients">Back to all ingredients</Link>
           <button className="delete-button" onClick={this.onRemove}>delete</button>
           <button onClick={() => this.setState({showEdit: {
             name: true,
@@ -65,14 +67,17 @@ class IngredientDetail extends Component {
           }
           })}>edit</button>
         </div>
-        <h2>{ ingredient.name }</h2>
-        {this.state.showEdit.name ? <EditName
-          name={this.state.ingredient.name}
-          onUpdate={this.onUpdateField}/> : null}
-        <img src={ ingredient.imgUrl } alt=""/>
-        <div className="description">
-            <p>{ ingredient.description }</p>
-
+        <div className={css(styles.title)}>
+          <h2>{ ingredient.name }</h2>
+          {this.state.showEdit.name ? <EditName
+            name={this.state.ingredient.name}
+            onUpdate={this.onUpdateField}/> : null}
+        </div>
+        <div className={css(styles.left)}>
+          <img src={ ingredient.imgUrl } alt=""/>
+        </div>
+        <div className={css(styles.right)}>
+          <p>{ ingredient.description }</p>
           {this.state.showEdit.description ? <EditDescription
             description={this.state.ingredient.description}
             onUpdate={this.onUpdateField}/> : null}

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { css } from 'aphrodite';
+import styles from '../styles/detail';
 import request from 'superagent';
 import apiUrl from '../config';
 import Ingredient from './Ingredient';
@@ -81,7 +83,8 @@ class JuiceDetail extends Component {
     const { juice } = this.state;
     return (
       <div className="juice-detail">
-        <div className="edit-controls">
+
+        <div className={css(styles.editControls)}>
           <Link to="/juices">Back to all juices</Link>
           <button onClick={this.onRemove}>delete</button>
           <button onClick={() => this.setState({showEdit: {
@@ -91,13 +94,19 @@ class JuiceDetail extends Component {
           }
           })}>edit</button>
         </div>
-        <h2>{juice.name} 
-        </h2>
-        {this.state.showEdit.name ? <EditName
-          name={this.state.juice.name}
-          onUpdate={this.onUpdateField}/> : null}
-        <img src={this.state.juice.imgUrl}/>
-        <div className="description">
+
+        <div className={css(styles.title)}>
+          <h2>{juice.name}</h2>
+          {this.state.showEdit.name ? <EditName
+            name={this.state.juice.name}
+            onUpdate={this.onUpdateField}/> : null}
+        </div>
+
+        <div className={css(styles.left)}>
+          <img src={this.state.juice.imgUrl} alt=""/>
+        </div>
+
+        <div className={css(styles.right)}>
           <h4>Description</h4>
           <p>{juice.description}</p>
           {this.state.showEdit.description ? <EditDescription
@@ -125,3 +134,24 @@ class JuiceDetail extends Component {
 }
 
 export default JuiceDetail;
+
+// const styles = StyleSheet.create({
+//   title: {
+//     textAlign: 'center'
+//   },
+//   editControls: {
+//     textAlign: 'center',
+//     margin: '20px auto'
+//   },
+//   left: {
+//     width: '25%',
+//     margin: '0 12.5%',
+//     float: 'left'
+//   },
+//   right: {
+//     width: '45%',
+//     margin: '0 2.5%',
+//     float: 'right'
+//   }
+
+// });
