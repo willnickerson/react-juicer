@@ -52,7 +52,7 @@ class AllJuices extends Component {
             _id = { juice._id }
             onRemove={() => this.onJuiceRemove(index)}
           />)}
-          <h3>Add Juice</h3>
+          <h2>Add Juice</h2>
           <AddItemForm onAdd={ this.onJuiceAdd }/>
       </div>  
     );

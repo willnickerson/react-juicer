@@ -1,34 +1,11 @@
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+img {
+  display: block;
+  max-width: 100%;
 }
 
-
-.nav {
-  list-style-type: none;
-  text-decoration: none;
+a {
+  color: blueviolet;
 }
-
-.nav-link {
-  display: inline-block;
-  margin: 0 20px;
-}
-
-.nav-link a {
-  color: white;
-  text-decoration: none;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-  text-align: center;
-}
-
-.main
 
 .container {
   width: 90%;
@@ -40,19 +17,10 @@
   text-align: center
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
 ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
-}
-
-img {
-  display: block;
 }
 
 h1, h2 {
@@ -63,11 +31,12 @@ h3 {
   display: inline-block;
 }
 
-.juice, .ingredient {
+/*.juice, .ingredient {
   width: 33%;
   margin: 0;
   text-align: center;
   display: inline-block;
+  vertical-align: top;
 }
 
 .juice img, .ingredient img {
@@ -75,9 +44,6 @@ h3 {
   margin: 0 auto;
 }
 
-.ingredient {
-  height: 300px;
-}
 
 .ingredient p {
   width: 80%;
@@ -88,7 +54,7 @@ h3 {
 .juice .ingredients-list {
   height: 50px;
   overflow: auto;
-}
+}*/
 button {
   margin-left: 5px;
 }
@@ -99,31 +65,5 @@ button {
   border-radius: 12%;
 }
 
-.juice-detail {
-  width: 90%;
-  margin: 0 auto;
-}
-
-.juice-detail img {
-  width: 30%;
-  margin: 0 10%;
-  display: inline-block;
-}
-
-.juice-detail .description {
-  width: 40%;
-  margin: 4.5%; 
-  float: right;
-}
-
-.edit-controls {
-  width: 60%;
-  margin: 0 auto;
-}
-
-.edit-controls button {
-  width: 20%;
-  margin: 3% 4%;
-}
 
 

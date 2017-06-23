@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { StyleSheet, css } from 'aphrodite';
 import PropTypes from 'prop-types';
 
 class AddItemForm extends Component {
@@ -40,19 +41,30 @@ class AddItemForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.onSubmit} className={css(styles.addForm)}>
         <label htmlFor="name">name: </label>
-        <input type="text" value={this.state.name} onChange={this.onNameChange}/>
+        <input className={css(styles.formInput)} type="text" value={this.state.name} onChange={this.onNameChange}/>
 
         <label htmlFor="description">description: </label>
-        <input type="text" value={this.state.description} onChange={this.onDescriptionChange}/>
+        <input className={css(styles.formInput)} type="text" value={this.state.description} onChange={this.onDescriptionChange}/>
 
         <label htmlFor="imgUrl">Image Url: </label>
-        <input type="text" value={this.state.imgUrl} onChange={this.onImgUrlChange}/>
-        <input type="submit" value="Add Juice"/>
+        <input className={css(styles.formInput)} type="text" value={this.state.imgUrl} onChange={this.onImgUrlChange}/>
+        <input type="submit" value="Add!"/>
       </form> 
     );
   }
 }
 
 export default AddItemForm;
+
+
+const styles = StyleSheet.create({
+  addForm: {
+    margin: '30px auto 75px auto',
+    width: '70%'
+  },
+  formInput: {
+    marginRight: '25px'
+  }
+});
