@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 const Ingredient = props => {
   return(
     <div className="ingredient">
-      <h4>
+      <h3>
         <Link to={`/ingredients/${props._id}`}> {props.name} </Link>
-        <button onClick={props.onRemove}>X</button>
-      </h4>
+        <button className="delete-button" onClick={props.onRemove}>X</button>
+      </h3>
       {props.imgUrl ? <img src={props.imgUrl}/> : null}
       <p> {props.description} </p>
     </div>

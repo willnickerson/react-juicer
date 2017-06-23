@@ -46,6 +46,7 @@ class AllJuices extends Component {
         <h1> All Juices </h1>
         {juices.map((juice, index) => 
           <Juice
+            imgUrl = { juice.imgUrl }
             key = { juice._id }
             name = { juice.name } 
             _id = { juice._id }

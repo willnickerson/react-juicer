@@ -5,7 +5,7 @@ import AllJuices from './AllJuices';
 
 export default function Juices(props) {
   return(
-    <div> 
+    <div className="container"> 
         <Switch>
           <Route exact path='/juices' component={ AllJuices }/>}/>
           <Route path='/juices/:juiceId' component={ JuiceDetail }/>

@@ -4,9 +4,6 @@ import PropTypes from 'prop-types';
 class AddItemForm extends Component {
   static PropTypes = {
     onAdd: PropTypes.func.isRequired,
-    name: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    imgUrl: PropTypes.string.isRequired
   }
 
   constructor(props) {

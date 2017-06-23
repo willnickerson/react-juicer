@@ -30,14 +30,14 @@ class AllIngredients extends Component {
       });
   }
 
-  // onJuiceRemove = index => {
-  //   request
-  //     .delete(`${apiUrl}/juices/${this.state.juices[index]._id}`)
-  //     .end((err, res) => {
-  //       this.state.juices.splice(index, 1);
-  //       this.setState(this.state);
-  //     });
-  // }
+  onIngredientRemove = index => {
+    request
+      .delete(`${apiUrl}/ingredients/${this.state.ingredients[index]._id}`)
+      .end((err, res) => {
+        this.state.ingredients.splice(index, 1);
+        this.setState(this.state);
+      });
+  }
 
   render() {
     const { ingredients } = this.state;
@@ -51,7 +51,7 @@ class AllIngredients extends Component {
             _id = { ingredient._id }
             description = { ingredient.description }
             imgUrl = { ingredient.imgUrl }
-            onRemove={() => this.onJuiceRemove(index)}
+            onRemove={() => this.onIngredientRemove(index)}
           />)}
 
           <h3>Add Ingredient </h3>

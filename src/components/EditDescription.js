@@ -26,9 +26,7 @@ class EditDescription extends Component {
   render() {
     return (
       <form onSubmit={this.onSubmit}>
-        <textarea name="" id="" cols="30" rows="10" onChange={this.onChange}>
-          {this.state.description}
-        </textarea>
+        <textarea name="" id="" cols="60" rows="5" onChange={this.onChange} value={this.state.description} />
         <input type="submit" value="update"/>
       </form>
     );

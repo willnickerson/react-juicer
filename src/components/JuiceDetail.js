@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import request from 'superagent';
 import apiUrl from '../config';
 import Ingredient from './Ingredient';
@@ -8,10 +9,6 @@ import EditDescription from './EditDescription';
 import IngredientSelect from './IngredientSelect';
 
 class JuiceDetail extends Component {
-  static PropTypes = {
-    _id: PropTypes.string.isRequired,
-  }
-
   constructor(props) {
     super(props);
 
@@ -35,7 +32,7 @@ class JuiceDetail extends Component {
         this.setState({juice: res.body});
       });
   }
-  
+
   onRemoveIngredient(index) {
     this.state.juice.ingredients.splice(index, 1);
     request
@@ -83,8 +80,9 @@ class JuiceDetail extends Component {
   render() {
     const { juice } = this.state;
     return (
-      <div>
-        <h2>{juice.name} 
+      <div className="juice-detail">
+        <div className="edit-controls">
+          <Link to="/juices">Back to all juices</Link>
           <button onClick={this.onRemove}>delete</button>
           <button onClick={() => this.setState({showEdit: {
             name: true,
@@ -92,30 +90,35 @@ class JuiceDetail extends Component {
             imgUrl: false
           }
           })}>edit</button>
+        </div>
+        <h2>{juice.name} 
         </h2>
         {this.state.showEdit.name ? <EditName
           name={this.state.juice.name}
           onUpdate={this.onUpdateField}/> : null}
+        <img src={this.state.juice.imgUrl}/>
+        <div className="description">
+          <h4>Description</h4>
+          <p>{juice.description}</p>
+          {this.state.showEdit.description ? <EditDescription
+            description={this.state.juice.description}
+            onUpdate={this.onUpdateField}/> : null}
 
-        <h4>Description</h4>
-        <p>{juice.description}</p>
+          <h4>Ingredients</h4>
+          <ul className="ingredients-list">
+            {juice.ingredients.map((ingredient, index) =>  
+              <Ingredient name={ingredient.name} 
+                description={ingredient.description} 
+                _id={ingredient._id} 
+                key={ingredient._id}
+                imgUrl={ingredient.imgUrl}
+                onRemove={() => this.onRemoveIngredient(index)}/>)}
+          </ul>
+          <IngredientSelect 
+            juiceIngredients={this.state.juice.ingredients} 
+            onAdd={this.onAddIngredient}/>
+        </div>
 
-        {this.state.showEdit.description ? <EditDescription
-          description={this.state.juice.description}
-          onUpdate={this.onUpdateField}/> : null}
-
-        <h4>Ingredients</h4>
-        <ul className="ingredients-list">
-          {juice.ingredients.map((ingredient, index) =>  
-            <Ingredient name={ingredient.name} 
-              description={ingredient.description} 
-              _id={ingredient._id} 
-              key={ingredient._id}
-              onRemove={() => this.onRemoveIngredient(index)}/>)}
-        </ul>
-        <IngredientSelect 
-          juiceIngredients={this.state.juice.ingredients} 
-          onAdd={this.onAddIngredient}/>
       </div>
     );
   }
